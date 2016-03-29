@@ -1,0 +1,24 @@
+﻿<Window x:Class="DistributedServicesCW.FileStorageInterface"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FileStorageInterface" Height="321" Width="596">
+    <Grid Margin="0,0,2,-3">
+        <ListBox x:Name="lstFiles" HorizontalAlignment="Left" Height="151" Margin="80,58,0,0" VerticalAlignment="Top" Width="368" RenderTransformOrigin="0.5,0.5">
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.051"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
+        </ListBox>
+        <Button x:Name="btnDownload" Content="Download File" HorizontalAlignment="Left" Margin="168,228,0,0" VerticalAlignment="Top" Width="86"/>
+        <Button x:Name="btnUpload" Content="Upload File" HorizontalAlignment="Left" Margin="60,228,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnLogout" Content="Logout" HorizontalAlignment="Left" Margin="274,228,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.413,0.455" IsCancel="True"/>
+        <Button x:Name="btnQuit" Content="Quit" HorizontalAlignment="Left" Margin="391,228,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnManage" Content="Manage Profile" HorizontalAlignment="Left" Margin="480,10,0,0" VerticalAlignment="Top" Width="96"/>
+        <Label x:Name="lblWelcome" Content="" HorizontalAlignment="Left" Height="29" Margin="101,14,0,0" VerticalAlignment="Top" Width="278"/>
+
+    </Grid>
+</Window>

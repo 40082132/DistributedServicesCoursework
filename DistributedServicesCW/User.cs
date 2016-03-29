@@ -22,6 +22,8 @@ namespace DistributedServicesCW
         public string Username;
         [DataMember(Name = "Password")]
         public string Password;
+        [DataMember(Name = "User Number")]
+        public string UserNumber;
 
     }
 }
