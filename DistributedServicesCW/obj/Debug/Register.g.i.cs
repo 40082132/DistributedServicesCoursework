@@ -183,9 +183,21 @@ namespace DistributedServicesCW {
             {
             case 1:
             this.btnBack = ((System.Windows.Controls.Button)(target));
+            
+            #line 6 "..\..\Register.xaml"
+            this.btnBack.Click += new System.Windows.RoutedEventHandler(this.btnBack_Click);
+            
+            #line default
+            #line hidden
             return;
             case 2:
             this.btnConfirm = ((System.Windows.Controls.Button)(target));
+            
+            #line 7 "..\..\Register.xaml"
+            this.btnConfirm.Click += new System.Windows.RoutedEventHandler(this.btnConfirm_Click);
+            
+            #line default
+            #line hidden
             return;
             case 3:
             this.txtEmail = ((System.Windows.Controls.TextBox)(target));

@@ -87,9 +87,21 @@ namespace DistributedServicesCW {
             {
             case 1:
             this.btnLogin = ((System.Windows.Controls.Button)(target));
+            
+            #line 6 "..\..\MainWindow.xaml"
+            this.btnLogin.Click += new System.Windows.RoutedEventHandler(this.btnLogin_Click);
+            
+            #line default
+            #line hidden
             return;
             case 2:
             this.btnRegister = ((System.Windows.Controls.Button)(target));
+            
+            #line 16 "..\..\MainWindow.xaml"
+            this.btnRegister.Click += new System.Windows.RoutedEventHandler(this.btnRegister_Click);
+            
+            #line default
+            #line hidden
             return;
             }
             this._contentLoaded = true;

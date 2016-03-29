@@ -119,9 +119,21 @@ namespace DistributedServicesCW {
             {
             case 1:
             this.lblBack = ((System.Windows.Controls.Button)(target));
+            
+            #line 6 "..\..\Login.xaml"
+            this.lblBack.Click += new System.Windows.RoutedEventHandler(this.lblBack_Click);
+            
+            #line default
+            #line hidden
             return;
             case 2:
             this.btnSignIn = ((System.Windows.Controls.Button)(target));
+            
+            #line 7 "..\..\Login.xaml"
+            this.btnSignIn.Click += new System.Windows.RoutedEventHandler(this.btnSignIn_Click);
+            
+            #line default
+            #line hidden
             return;
             case 3:
             this.txtUsername = ((System.Windows.Controls.TextBox)(target));
