@@ -23,5 +23,19 @@ namespace DistributedServicesCW
         {
             InitializeComponent();
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwindow = new MainWindow();
+            mainwindow.Show();
+            this.Close();
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            FileStorageInterface filestore = new FileStorageInterface();
+            filestore.Show();
+            this.Close();
+        }
     }
 }

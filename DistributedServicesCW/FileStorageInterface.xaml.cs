@@ -23,5 +23,23 @@ namespace DistributedServicesCW
         {
             InitializeComponent();
         }
+
+        private void btnManage_Click(object sender, RoutedEventArgs e)
+        {
+            ProfileManage manage = new ProfileManage();
+            manage.Show();
+        }
+
+        private void btnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainwindow = new MainWindow();
+            mainwindow.Show();
+            this.Close();
+        }
     }
 }

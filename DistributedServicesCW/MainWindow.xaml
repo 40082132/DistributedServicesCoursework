@@ -3,6 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button x:Name="btnLogin" Content="Login" HorizontalAlignment="Left" Margin="1,0,0,0" VerticalAlignment="Top" Width="277" RenderTransformOrigin="0.5,0.5" Height="319" Click="btnLogin_Click">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.017"/>
+                    <RotateTransform Angle="-0.159"/>
+                    <TranslateTransform Y="0.035"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button x:Name="btnRegister" Content="Register" HorizontalAlignment="Left" Margin="278,0,0,0" VerticalAlignment="Top" Width="239" Height="320" Click="btnRegister_Click"/>
+
     </Grid>
 </Window>

@@ -23,5 +23,10 @@ namespace DistributedServicesCW
         {
             InitializeComponent();
         }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
