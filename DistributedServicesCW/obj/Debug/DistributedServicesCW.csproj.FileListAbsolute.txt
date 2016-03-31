@@ -1,1 +1,2 @@
 c:\users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\DistributedServicesCW.exe.config
+C:\Users\40082\OneDrive\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\DistributedServicesCW.exe.config
