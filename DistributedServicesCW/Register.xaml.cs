@@ -21,16 +21,17 @@ namespace DistributedServicesCW
     {
         string badpw;
         int count = 0;
+        UserList users = new UserList();
         public List<string> unsafePasswordList = new List<string>();
         System.IO.StreamReader file = new System.IO.StreamReader("worstpasswords.txt");
-        
-        
+
+
         public Register()
         {
 
             InitializeComponent();
-            
-    }
+
+        }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -42,7 +43,7 @@ namespace DistributedServicesCW
         private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             User u1 = new User();
-            while((badpw = file.ReadLine()) != null)
+            while ((badpw = file.ReadLine()) != null)
             {
                 unsafePasswordList.Add(badpw);
             }
@@ -52,17 +53,30 @@ namespace DistributedServicesCW
             u1.LastName = txtLastName.Text;
             u1.Username = txtUsername.Text;
             u1.Password = txtPassword.Text;
-            foreach(var p in unsafePasswordList)
+            passwordIsSafe();
+
+            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.usernameIsValid() && passwordIsSafe == true)
             {
-                if (u1.Password == p)
-                {
-
-                }
+                users.Add(u1);
+                FileStorageInterface filestore = new FileStorageInterface();
+                filestore.Show();
+                this.Close();
             }
+        }
+        public bool passwordIsSafe()
+        {
+            foreach (var p in unsafePasswordList)
+            {
+                if (txtPassword.Text == p)
+                {
+                    return false;
+                   
+                }
 
-            FileStorageInterface filestore = new FileStorageInterface();
-            filestore.Show();
-            this.Close();
+            }
+            return true;
+            }
         }
     }
 }
+    

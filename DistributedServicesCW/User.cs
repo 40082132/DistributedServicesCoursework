@@ -16,6 +16,7 @@ namespace DistributedServicesCW
     public class User
     {
         
+        
         [DataMember(Name = "first_name")]
         public string FirstName;
         [DataMember(Name = "last_name")]
@@ -28,6 +29,7 @@ namespace DistributedServicesCW
         public string Password;
         [DataMember(Name = "User Number")]
         public string UserNumber;
+        
         public bool emailisValid()
         {
            
@@ -73,8 +75,17 @@ namespace DistributedServicesCW
                 return false;
             }
         }
-        public bool passwordIsValid()
-
+        public bool passwordIsStrong()
+        {
+            if(Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
    
