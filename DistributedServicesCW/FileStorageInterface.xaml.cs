@@ -14,9 +14,11 @@ using System.Windows.Shapes;
 using System.Drawing;
 using System.IO;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Windows.Controls;
-
+using sss;
+using sss.config;
+using sss.crypto.data;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace DistributedServicesCW
 {
@@ -50,7 +52,15 @@ namespace DistributedServicesCW
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
-          
+            RandomSources r = RandomSources.SHA1;
+            Encryptors e = Encryptors.
+            System.IO.StreamReader file = new System.IO.StreamReader(lstFiles.SelectedItem.ToString());
+            string line = file.ReadLine();
+            Facade f = new Facade
+            byte[] bytes = ObjectToByteArray(line);
+
+            
+            
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -61,7 +71,30 @@ namespace DistributedServicesCW
             {
                 string filename = dlg.FileName;
                 lstFiles.Items.Add(filename);
+                
             }
+        }
+        public static byte[] ObjectToByteArray(Object obj)
+        {
+            if (obj == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+
+            }
+        }
+
+        public static Object ByteArrayToObject(byte[] arrBytes)
+        {
+            MemoryStream memStream = new MemoryStream();
+            BinaryFormatter binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Object obj = (Object)binForm.Deserialize(memStream);
+            return obj;
         }
     }
 }
