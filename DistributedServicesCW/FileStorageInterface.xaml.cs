@@ -11,6 +11,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Drawing;
+using System.IO;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Windows.Controls;
+
 
 namespace DistributedServicesCW
 {
@@ -40,6 +46,22 @@ namespace DistributedServicesCW
             MainWindow mainwindow = new MainWindow();
             mainwindow.Show();
             this.Close();
+        }
+
+        private void btnUpload_Click(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+            if(result == true)
+            {
+                string filename = dlg.FileName;
+                lstFiles.Items.Add(filename);
+            }
         }
     }
 }

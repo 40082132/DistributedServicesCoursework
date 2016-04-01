@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace DistributedServicesCW
 {
     [CollectionDataContract(Name = "Users", Namespace="http://www.napier.ac.uk")]
-    class UserList : List<User>
+    public class UserList : List<User>
     {
 
     }

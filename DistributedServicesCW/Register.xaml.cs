@@ -55,7 +55,7 @@ namespace DistributedServicesCW
             u1.Password = txtPassword.Text;
             passwordIsSafe();
 
-            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.usernameIsValid() && passwordIsSafe == true)
+            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.usernameIsValid() && passwordIsSafe() == true)
             {
                 users.Add(u1);
                 FileStorageInterface filestore = new FileStorageInterface();
@@ -78,5 +78,5 @@ namespace DistributedServicesCW
             }
         }
     }
-}
+
     

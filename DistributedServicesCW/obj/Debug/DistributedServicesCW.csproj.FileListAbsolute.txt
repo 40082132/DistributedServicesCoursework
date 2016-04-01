@@ -1,2 +1,22 @@
 c:\users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\DistributedServicesCW.exe.config
 C:\Users\40082\OneDrive\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\DistributedServicesCW.exe.config
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.csprojResolveAssemblyReference.cache
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\FileStorageInterface.baml
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\Login.baml
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\MainWindow.baml
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\ProfileManage.baml
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\Register.baml
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\FileStorageInterface.g.cs
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\Login.g.cs
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\MainWindow.g.cs
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\ProfileManage.g.cs
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\Register.g.cs
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\App.g.cs
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW_MarkupCompile.cache
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.g.resources
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.Properties.Resources.resources
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.csproj.GenerateResource.Cache
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\DistributedServicesCW.exe
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\DistributedServicesCW.pdb
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.exe
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.pdb
