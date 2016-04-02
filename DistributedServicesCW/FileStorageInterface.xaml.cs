@@ -52,12 +52,26 @@ namespace DistributedServicesCW
 
         private void btnUpload_Click(object sender, RoutedEventArgs e)
         {
-            RandomSources r = RandomSources.SHA1;
-            Encryptors e = Encryptors.
+            int n = 5, t = 3;
+            RandomSources random = RandomSources.SHA1;
+            Encryptors encrypt = Encryptors.AES;
+            Algorithms a = Algorithms.CSS;
             System.IO.StreamReader file = new System.IO.StreamReader(lstFiles.SelectedItem.ToString());
-            string line = file.ReadLine();
-            Facade f = new Facade
-            byte[] bytes = ObjectToByteArray(line);
+            string secret = file.ReadToEnd();
+            byte[] bytes = ObjectToByteArray(secret);
+            Facade f = new Facade(n, t, random, encrypt, a);
+            Share[] shares = f.split(bytes);
+            int counter = n - t;
+            List<Share> list = shares.ToList();
+            Random rand = new Random();
+            for (int i = 0; i < counter; i++)
+            {
+                list.RemoveAt(rand.Next(list.Count));
+            }
+                shares = list.ToArray();
+                Object o = ByteArrayToObject(f.join(shares));
+                lstFiles.Items.Add(o);
+            
 
             
             

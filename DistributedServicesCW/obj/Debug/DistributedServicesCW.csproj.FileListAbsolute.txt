@@ -20,3 +20,8 @@ C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\Di
 C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\DistributedServicesCW.pdb
 C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.exe
 C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\obj\Debug\DistributedServicesCW.pdb
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\IKVM.OpenJDK.Core.dll
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\IKVM.OpenJDK.Security.dll
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\IKVM.OpenJDK.Util.dll
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\IKVM.Runtime.dll
+C:\Users\40082132\documents\visual studio 2013\Projects\DistributedServicesCW\DistributedServicesCW\bin\Debug\sss.dll
