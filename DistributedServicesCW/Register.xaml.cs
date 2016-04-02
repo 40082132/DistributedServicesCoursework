@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
+using System.Data;
 
 namespace DistributedServicesCW
 {
@@ -64,13 +65,15 @@ namespace DistributedServicesCW
         }
         private void AddUser(string username, string password, string first_name, string last_name, string email)
         {
-            string smtpEmail = txtEmail.Text;
-            string smtpPassword = txtPassword.Text;
-            int smtpPort = (int)smtpPortNumericUD.value;
+            
+            
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
+            
+            foreach(DataRow row in LoginDataSet.)
+            {
 
-            foreach(DataRow row in LoginServiceDataSet)
+            }
         }
         public bool passwordIsSafe()
         {

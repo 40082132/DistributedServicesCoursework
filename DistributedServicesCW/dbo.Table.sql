@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Table]
 (
-	[Username] nvarchar(255) NOT NULL PRIMARY KEY,
-	[Password] nvarchar(255) NOT NULL,
-	[Email] nvarchar(255) NOT NULL,
-	[First_Name] nvarchar(255) NOT NULL,
-	[Last_Name] nvarchar(255) NOT NULL
-);
+	[Username] VARCHAR(50) NOT NULL PRIMARY KEY, 
+    [Password] NVARCHAR(MAX) NOT NULL, 
+    [Email] VARCHAR(50) NOT NULL, 
+    [First_Name] NVARCHAR(50) NOT NULL, 
+    [Last_Name] NVARCHAR(MAX) NOT NULL
+)
