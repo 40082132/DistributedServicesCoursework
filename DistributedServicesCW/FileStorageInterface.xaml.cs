@@ -19,6 +19,9 @@ using sss.config;
 using sss.crypto.data;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
 
 namespace DistributedServicesCW
 {

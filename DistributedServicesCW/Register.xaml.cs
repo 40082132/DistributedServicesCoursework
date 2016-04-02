@@ -11,7 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Text.RegularExpressions;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
 
 namespace DistributedServicesCW
 {
@@ -49,20 +52,25 @@ namespace DistributedServicesCW
                 unsafePasswordList.Add(badpw);
             }
             file.Close();
-            u1.EmailAddress = txtEmail.Text;
-            u1.FirstName = txtFirstName.Text;
-            u1.LastName = txtLastName.Text;
-            u1.Username = txtUsername.Text;
-            u1.Password = txtPassword.Text;
+            
             passwordIsSafe();
 
-            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.usernameIsValid() && passwordIsSafe() == true)
-            {
+            
                 users.Add(u1);
                 FileStorageInterface filestore = new FileStorageInterface();
                 filestore.Show();
                 this.Close();
-            }
+            
+        }
+        private void AddUser(string username, string password, string first_name, string last_name, string email)
+        {
+            string smtpEmail = txtEmail.Text;
+            string smtpPassword = txtPassword.Text;
+            int smtpPort = (int)smtpPortNumericUD.value;
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+
+            foreach(DataRow row in LoginServiceDataSet)
         }
         public bool passwordIsSafe()
         {
@@ -78,6 +86,7 @@ namespace DistributedServicesCW
             return true;
             }
         }
+        
     }
 
     
