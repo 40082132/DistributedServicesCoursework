@@ -68,8 +68,13 @@ namespace DistributedServicesCW
             {
                 list.RemoveAt(rand.Next(list.Count));
             }
-                shares = list.ToArray();
-                Object o = ByteArrayToObject(f.join(shares));
+            shares = list.ToArray();
+            Object o = ByteArrayToObject(f.join(shares));
+            int c = 0;
+            for (c = 0; c < shares.Length; c++)
+            {
+                byte[] serialized = shares[c].serialize();
+            }
                 lstFiles.Items.Add(o);
             
 
