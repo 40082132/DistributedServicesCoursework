@@ -16,6 +16,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace DistributedServicesCW
 {
@@ -45,8 +46,10 @@ namespace DistributedServicesCW
             this.Close();
         }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        private void btnConfirm_Click(object sender, RoutedEventArgs e, LoginDBDataSet database)
         {
+            
+            bool uniqueusername = true;
             User u1 = new User();
             while ((badpw = file.ReadLine()) != null)
             {
@@ -55,26 +58,32 @@ namespace DistributedServicesCW
             file.Close();
             
             passwordIsSafe();
+            foreach (DataRow row in database.Login.Rows)
+            {
+                if (row.ItemArray[0].Equals(u1.Username))
+                {
+                    MessageBox.Show("Username already exists");
+                    uniqueusername = false;
+                }
+            }
+            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.passwordIsStrong() && u1.usernameIsValid() && passwordIsSafe() && uniqueusername == true)
+            {
+                string encryptedPassword = u1.hashPassword(u1.Password);
+                L
 
-            
-                users.Add(u1);
                 FileStorageInterface filestore = new FileStorageInterface();
                 filestore.Show();
                 this.Close();
-            
-        }
-        private void AddUser(string username, string password, string first_name, string last_name, string email)
-        {
-            
-            
-            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            Match match = regex.Match(email);
-            
-            foreach(DataRow row in LoginDataSet.)
-            {
-
             }
+            
         }
+        
+            
+         
+            
+            
+           
+  
         public bool passwordIsSafe()
         {
             foreach (var p in unsafePasswordList)
@@ -88,6 +97,11 @@ namespace DistributedServicesCW
             }
             return true;
             }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
         }
         
     }
