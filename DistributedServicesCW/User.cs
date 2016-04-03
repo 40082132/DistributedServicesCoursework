@@ -8,6 +8,7 @@ using System.ServiceModel.Web;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace DistributedServicesCW
 {
@@ -85,6 +86,21 @@ namespace DistributedServicesCW
             {
                 return false;
             }
+        }
+        public string hashPassword(string password)
+        {
+            SHA256 sha = new SHA256CryptoServiceProvider();
+
+            sha.ComputeHash(ASCIIEncoding.ASCII.GetBytes(password + EmailAddress));
+
+            byte[] result = sha.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for(int i = 0; i<result.Length; i++)
+            {
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+            return strBuilder.ToString();
         }
 
     }

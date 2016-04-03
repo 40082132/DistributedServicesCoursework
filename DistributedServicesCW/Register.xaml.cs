@@ -46,7 +46,7 @@ namespace DistributedServicesCW
             this.Close();
         }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e, LoginDBDataSet database)
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
         {
             
             bool uniqueusername = true;
@@ -58,18 +58,11 @@ namespace DistributedServicesCW
             file.Close();
             
             passwordIsSafe();
-            foreach (DataRow row in database.Login.Rows)
-            {
-                if (row.ItemArray[0].Equals(u1.Username))
-                {
-                    MessageBox.Show("Username already exists");
-                    uniqueusername = false;
-                }
-            }
+           
             if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.passwordIsStrong() && u1.usernameIsValid() && passwordIsSafe() && uniqueusername == true)
             {
                 string encryptedPassword = u1.hashPassword(u1.Password);
-                L
+                
 
                 FileStorageInterface filestore = new FileStorageInterface();
                 filestore.Show();
