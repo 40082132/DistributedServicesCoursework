@@ -25,18 +25,22 @@ namespace DistributedServicesCW
     /// </summary>
     public partial class Register : Window
     {
-        string badpw;
-        int count = 0;
+
+        SqlConnection connect = new SqlConnection();
+
         UserList users = new UserList();
         public List<string> unsafePasswordList = new List<string>();
-        System.IO.StreamReader file = new System.IO.StreamReader("worstpasswords.txt");
+
 
 
         public Register()
         {
 
             InitializeComponent();
-
+            connect.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;" + "AttachDbFilename=|DataDirectory|\\LoginData.mdf;Integrated Security=True";
+            connect.Open();
+            string s = connect.Database.ToString();
+            MessageBox.Show(s);
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -46,37 +50,7 @@ namespace DistributedServicesCW
             this.Close();
         }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
-        {
-            
-            bool uniqueusername = true;
-            User u1 = new User();
-            while ((badpw = file.ReadLine()) != null)
-            {
-                unsafePasswordList.Add(badpw);
-            }
-            file.Close();
-            
-            passwordIsSafe();
-           
-            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.passwordIsStrong() && u1.usernameIsValid() && passwordIsSafe() && uniqueusername == true)
-            {
-                string encryptedPassword = u1.hashPassword(u1.Password);
-                
 
-                FileStorageInterface filestore = new FileStorageInterface();
-                filestore.Show();
-                this.Close();
-            }
-            
-        }
-        
-            
-         
-            
-            
-           
-  
         public bool passwordIsSafe()
         {
             foreach (var p in unsafePasswordList)
@@ -84,19 +58,53 @@ namespace DistributedServicesCW
                 if (txtPassword.Text == p)
                 {
                     return false;
-                   
+
                 }
 
             }
             return true;
+        }
+
+        private void btnRegister_Click(object sender, RoutedEventArgs e)
+        {
+            bool uniqueusername = true;
+            User u1 = new User();
+
+
+            SqlCommand cmd2 = new SqlCommand("select count(*) from [Logins] where Username = @Username", connect);
+            cmd2.Parameters.AddWithValue("username", txtUsername.Text);
+            uniqueusername = (int)cmd2.ExecuteScalar() > 0;
+            if (uniqueusername.Equals(false))
+            {
+                MessageBox.Show("Username exists");
             }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
-        {
+            passwordIsSafe();
 
+
+            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.passwordIsStrong() && u1.usernameIsValid() && passwordIsSafe() && uniqueusername == true)
+            {
+                string encryptedPassword = u1.hashPassword(u1.Password);
+                u1.Password = encryptedPassword;
+                using (SqlCommand cmd3 = new SqlCommand("INSERT INTO [Logins] values (@Username, @Password, @Email, @First_Name, @Last_Name)", connect))
+                {
+                    cmd3.Parameters.AddWithValue("Username", txtUsername.Text);
+                    cmd3.Parameters.AddWithValue("Password", txtPassword.Text);
+                    cmd3.Parameters.AddWithValue("Email", txtEmail.Text);
+                    cmd3.Parameters.AddWithValue("First_Name", txtFirstName.Text);
+                    cmd3.Parameters.AddWithValue("Last_Name", txtLastName);
+
+                    cmd3.ExecuteNonQuery();
+                }
+                connect.Close();
+
+
+                FileStorageInterface filestore = new FileStorageInterface();
+                filestore.Show();
+                this.Close();
+            }
         }
-        }
-        
     }
+}
 
     

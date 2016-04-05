@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("login.mdf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("login_log.ldf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("logindata.mdf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("logindata_log.ldf")]
 
 
