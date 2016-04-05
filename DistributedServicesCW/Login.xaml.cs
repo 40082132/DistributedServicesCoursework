@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace DistributedServicesCW
 {
@@ -21,6 +24,7 @@ namespace DistributedServicesCW
     {
         public Login()
         {
+           
             InitializeComponent();
         }
 
@@ -33,9 +37,26 @@ namespace DistributedServicesCW
 
         private void btnSignIn_Click(object sender, RoutedEventArgs e)
         {
-            FileStorageInterface filestore = new FileStorageInterface();
-            filestore.Show();
-            this.Close();
+            SqlConnection connect = new SqlConnection();
+            connect.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;" + "AttachDbFilename=|DataDirectory|\\LoginData.mdf;Integrated Security=True";
+            connect.Open();
+            User u1 = new User();
+            u1.Username = txtUsername.Text;
+            u1.Password = txtPassword.Text;
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT COUNT(*) FROM [Logins] WHERE Username='" + txtUsername.Text + "' AND Password='" + txtPassword.Text + "'", connect);
+            DataTable dt = new DataTable(); //this is creating a virtual table  
+            sda.Fill(dt);
+            if (dt.Rows[0][0].ToString() == "1")
+            {
+                /* I have made a new page called home page. If the user is successfully authenticated then the form will be moved to the next form */
+                
+                FileStorageInterface filestore = new FileStorageInterface(u1);
+                filestore.Show();
+                this.Close();
+            }
+            else
+                MessageBox.Show("Invalid username or password");
+           
         }
     }
 }

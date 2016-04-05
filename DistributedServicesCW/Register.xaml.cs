@@ -37,10 +37,8 @@ namespace DistributedServicesCW
         {
 
             InitializeComponent();
-            connect.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;" + "AttachDbFilename=|DataDirectory|\\LoginData.mdf;Integrated Security=True";
-            connect.Open();
-            string s = connect.Database.ToString();
-            MessageBox.Show(s);
+            
+            
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -67,44 +65,75 @@ namespace DistributedServicesCW
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
+            connect.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;" + "AttachDbFilename=|DataDirectory|\\LoginData.mdf;Integrated Security=True";
+            connect.Open();
+
             bool uniqueusername = true;
             User u1 = new User();
+            u1.FirstName = txtFirstName.Text;
+            u1.LastName = txtLastName.Text;
+            u1.Password = txtPassword.Text;
+            u1.EmailAddress = txtEmail.Text;
+            u1.Username = txtUsername.Text;
 
-
-            SqlCommand cmd2 = new SqlCommand("select count(*) from [Logins] where Username = @Username", connect);
-            cmd2.Parameters.AddWithValue("username", txtUsername.Text);
-            uniqueusername = (int)cmd2.ExecuteScalar() > 0;
-            if (uniqueusername.Equals(false))
-            {
-                MessageBox.Show("Username exists");
-            }
+            
 
             passwordIsSafe();
 
+          
+                SqlDataAdapter sda = new SqlDataAdapter("SELECT Username FROM [Logins]", connect);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
 
-            if (u1.emailisValid() && u1.firstNameIsValid() && u1.lastNameIsValid() && u1.passwordIsStrong() && u1.usernameIsValid() && passwordIsSafe() && uniqueusername == true)
-            {
-                string encryptedPassword = u1.hashPassword(u1.Password);
-                u1.Password = encryptedPassword;
-                using (SqlCommand cmd3 = new SqlCommand("INSERT INTO [Logins] values (@Username, @Password, @Email, @First_Name, @Last_Name)", connect))
+                foreach (DataRow d in dt.Rows)
                 {
-                    cmd3.Parameters.AddWithValue("Username", txtUsername.Text);
-                    cmd3.Parameters.AddWithValue("Password", txtPassword.Text);
-                    cmd3.Parameters.AddWithValue("Email", txtEmail.Text);
-                    cmd3.Parameters.AddWithValue("First_Name", txtFirstName.Text);
-                    cmd3.Parameters.AddWithValue("Last_Name", txtLastName);
-
-                    cmd3.ExecuteNonQuery();
+                    if (d.ItemArray[0].Equals(u1.Username)) ;
+                    {
+                        uniqueusername = false;
+                    }
                 }
-                connect.Close();
+                if (uniqueusername == false)
+                {
+                    string cmdString = "INSERT INTO Logins (Username, Password, Email, First_Name, Last_Name) VALUES (@val1, @val2, @val3, @val4, @val5)";
 
 
-                FileStorageInterface filestore = new FileStorageInterface();
-                filestore.Show();
-                this.Close();
+                    using (SqlCommand comm = new SqlCommand())
+                    {
+                        comm.Connection = connect;
+                        comm.CommandText = cmdString;
+                        comm.Parameters.AddWithValue("@val1", txtUsername.Text);
+                        comm.Parameters.AddWithValue("@val2", txtPassword.Text);
+                        comm.Parameters.AddWithValue("@val3", txtEmail.Text);
+                        comm.Parameters.AddWithValue("@val4", txtFirstName.Text);
+                        comm.Parameters.AddWithValue("@val5", txtLastName.Text);
+                        try
+                        {
+                            
+                            comm.ExecuteNonQuery();
+                        connect.Close();
+                        }
+                        catch (SqlException a)
+                        {
+                            MessageBox.Show(a.Message);
+                        }
+                    }
+
+
+                    FileStorageInterface filestore = new FileStorageInterface(u1);
+                    filestore.Show();
+                    this.Close();
+                
+                }
+            
+            else
+            {
+                MessageBox.Show("Input is invalid");
             }
         }
+        
+        }
+    
     }
-}
+
 
     

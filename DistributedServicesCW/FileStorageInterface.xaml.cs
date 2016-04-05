@@ -30,7 +30,7 @@ namespace DistributedServicesCW
     /// </summary>
     public partial class FileStorageInterface : Window
     {
-        public FileStorageInterface()
+        public FileStorageInterface(User u1)
         {
             InitializeComponent();
         }
