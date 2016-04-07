@@ -228,9 +228,9 @@ namespace DistributedServicesCW {
             return;
             case 14:
             this.btnRegister = ((System.Windows.Controls.Button)(target));
-
-#line 29 "..\..\Register.xaml"
-                    btnRegister.Click += new RoutedEventHandler(this.btnRegister_Click);
+            
+            #line 29 "..\..\Register.xaml"
+            this.btnRegister.Click += new System.Windows.RoutedEventHandler(this.btnRegister_Click);
             
             #line default
             #line hidden
