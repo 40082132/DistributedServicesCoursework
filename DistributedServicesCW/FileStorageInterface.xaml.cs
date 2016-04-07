@@ -22,16 +22,20 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace DistributedServicesCW
+
+namespace DistributedServicesCW 
 {
     /// <summary>
     /// Interaction logic for FileStorageInterface.xaml
     /// </summary>
-    public partial class FileStorageInterface : Window
+    public partial class FileStorageInterface : Window , IShareService
     {
-        public FileStorageInterface(User u1)
+        public FileStorageInterface(User u1) 
         {
+
             InitializeComponent();
         }
 
@@ -76,9 +80,11 @@ namespace DistributedServicesCW
             int c = 0;
             for (c = 0; c < shares.Length; c++)
             {
-                byte[] serialized = shares[c].serialize();
+                byte[] s = shares[c].serialize();
             }
+            
                 lstFiles.Items.Add(o);
+
             
 
             
@@ -117,6 +123,44 @@ namespace DistributedServicesCW
             memStream.Seek(0, SeekOrigin.Begin);
             Object obj = (Object)binForm.Deserialize(memStream);
             return obj;
+        }
+        public bool SaveData(byte[] content, string blobName, string containerName)
+        {
+            string storageConnectionString =
+        "DefaultEndpointsProtocol=https;AccountName={distributedservicecs};" +
+        "AccountKey={ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==}";
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(storageConnectionString);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            // Retrieve a reference to a container 
+            CloudBlobContainer container =
+                blobClient.GetContainerReference(containerName);
+            // Create the container if it doesn't already exist
+            container.CreateIfNotExists();
+            // Retrieve reference to a blob named "myblob"
+            CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
+            // Create or overwrite the blob with content
+            blob.UploadText(content.ToString());
+            return true;
+        }
+
+        public string RetrieveData(string containerName, string blobName)
+        {
+            string storageConnectionString =
+        "DefaultEndpointsProtocol=https;AccountName={distributedservicecs};" +
+        "AccountKey={ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==}";
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(storageConnectionString);
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            // Retrieve a reference to a container 
+            CloudBlobContainer container =
+                blobClient.GetContainerReference(containerName);
+            // Create the container if it doesn't already exist
+            container.CreateIfNotExists();
+            // Retrieve reference to a blob named "myblob"
+            CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
+            StreamReader reader = new StreamReader(blob.OpenRead());
+            return reader.ReadToEnd();
         }
     }
 }
