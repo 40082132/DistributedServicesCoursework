@@ -61,6 +61,7 @@
     <Reference Include="IKVM.Runtime">
       <HintPath>..\IKVM.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="sss">
       <HintPath>..\sss.dll</HintPath>
     </Reference>
@@ -89,6 +90,7 @@
     <Compile Include="FileStorageInterface.xaml.cs">
       <DependentUpon>FileStorageInterface.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IShareService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -199,6 +201,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>LoginData.mdf</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

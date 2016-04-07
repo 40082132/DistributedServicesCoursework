@@ -78,12 +78,15 @@ namespace DistributedServicesCW
             shares = list.ToArray();
             Object o = ByteArrayToObject(f.join(shares));
             int c = 0;
+            byte[] s = null;
             for (c = 0; c < shares.Length; c++)
             {
-                byte[] s = shares[c].serialize();
+                s = shares[c].serialize();
             }
+            int sharenumbers = s.Length;
+            byte[] storedData = SaveData(s, sharenumbers, "myblob", "mycontainer");
+            string GetData = RetrieveData("myblob", "mycontainer");
             
-                lstFiles.Items.Add(o);
 
             
 
@@ -124,11 +127,12 @@ namespace DistributedServicesCW
             Object obj = (Object)binForm.Deserialize(memStream);
             return obj;
         }
-        public bool SaveData(byte[] content, string blobName, string containerName)
+        public byte[] SaveData(byte[] serialized, int sharenumbers, string blobName, string containerName)
         {
             string storageConnectionString =
-        "DefaultEndpointsProtocol=https;AccountName={distributedservicecs};" +
-        "AccountKey={ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==}";
+        "DefaultEndpointsProtocol=https;AccountName=distributedservicecs;" +
+        "AccountKey=ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==";
+            int index = 0;
             CloudStorageAccount storageAccount =
                 CloudStorageAccount.Parse(storageConnectionString);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
@@ -140,8 +144,8 @@ namespace DistributedServicesCW
             // Retrieve reference to a blob named "myblob"
             CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
             // Create or overwrite the blob with content
-            blob.UploadText(content.ToString());
-            return true;
+            blob.UploadFromByteArray(serialized, index, sharenumbers);
+            return serialized;
         }
 
         public string RetrieveData(string containerName, string blobName)

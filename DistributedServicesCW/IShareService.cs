@@ -11,7 +11,7 @@ namespace DistributedServicesCW
     public interface IShareService
     {
         [OperationContract]
-        bool SaveData(byte[] serialized, string blobName, string containerName);
+        byte[] SaveData(byte[] serialized, int sharenumbers, string blobName, string containerName);
 
         [OperationContract]
         string RetrieveData(string containerName, string blobName);

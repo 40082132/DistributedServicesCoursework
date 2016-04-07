@@ -73,3 +73,7 @@ C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServices
 C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\IKVM.OpenJDK.Util.dll
 C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\IKVM.Runtime.dll
 C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\sss.dll
+C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.WindowsAzure.Storage.dll
+C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.Data.Edm.dll
+C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.Data.Services.Client.dll
+C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.Data.OData.dll
