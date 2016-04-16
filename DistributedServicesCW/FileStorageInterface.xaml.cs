@@ -85,13 +85,9 @@ namespace DistributedServicesCW
             }
             int sharenumbers = s.Length;
             byte[] storedData = SaveData(s, sharenumbers, "myblob", "mycontainer");
-            string GetData = RetrieveData("myblob", "mycontainer");
             
 
-            
-
-            
-            
+      
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -147,12 +143,13 @@ namespace DistributedServicesCW
             blob.UploadFromByteArray(serialized, index, sharenumbers);
             return serialized;
         }
+      
 
-        public string RetrieveData(string containerName, string blobName)
+        public byte[] RetrieveData(string containerName, string blobName)
         {
             string storageConnectionString =
-        "DefaultEndpointsProtocol=https;AccountName={distributedservicecs};" +
-        "AccountKey={ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==}";
+        "DefaultEndpointsProtocol=https;AccountName=distributedservicecs;" +
+        "AccountKey=ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==";
             CloudStorageAccount storageAccount =
                 CloudStorageAccount.Parse(storageConnectionString);
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
@@ -161,10 +158,85 @@ namespace DistributedServicesCW
                 blobClient.GetContainerReference(containerName);
             // Create the container if it doesn't already exist
             container.CreateIfNotExists();
+            container.SetPermissions(
+    new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Blob });
             // Retrieve reference to a blob named "myblob"
             CloudBlockBlob blob = container.GetBlockBlobReference(blobName);
-            StreamReader reader = new StreamReader(blob.OpenRead());
-            return reader.ReadToEnd();
+            blob.FetchAttributes();
+            long fileLength = blob.Properties.Length;
+            byte[] fileContent = new byte[fileLength];
+            for (int i = 0; i < fileLength; i++)
+            {
+                fileContent[i] = 0x20;
+            }
+            blob.DownloadToByteArray(fileContent, 0);
+            return fileContent;
+        }
+
+        private void btnDownload_Click(object sender, RoutedEventArgs e)
+        {
+            int n = 5, t = 3;
+            RandomSources random = RandomSources.SHA1;
+            Encryptors encrypt = Encryptors.AES;
+            Algorithms a = Algorithms.CSS;
+            Facade f = new Facade(n, t, random, encrypt, a);
+
+            Byte[] downloadedData = RetrieveData("mycontainer", "myblob");
+            Share[] shares = f.split(downloadedData);
+            List<Share> shareList = new List<Share>();
+            for(int i = 0; i<shares.Length; ++i)
+            {
+                Share s = SerializableShare.deserialize(downloadedData);
+                shareList.Add(s);
+            }
+            
+            object o = ByteArrayToObject(f.join(shares));
+            System.IO.File.WriteAllLines("@C://Users//Liam//file.txt",((string[])o));
+            
+
+
+
+        }
+
+        private void btnList_Click(object sender, RoutedEventArgs e)
+        {
+            lstFiles.Items.Clear();
+            string storageConnectionString =
+        "DefaultEndpointsProtocol=https;AccountName=distributedservicecs;" +
+        "AccountKey=ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==";
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(storageConnectionString);
+
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
+
+            // Loop over items within the container and output the length and URI.
+            foreach (IListBlobItem item in container.ListBlobs(null, false))
+            {
+                if (item.GetType() == typeof(CloudBlockBlob))
+                {
+                    CloudBlockBlob blob = (CloudBlockBlob)item;
+                    lstFiles.Items.Add(blob.Uri);
+
+
+                }
+                else if (item.GetType() == typeof(CloudPageBlob))
+                {
+                    CloudPageBlob pageBlob = (CloudPageBlob)item;
+
+                    Console.WriteLine("Page blob of length {0}: {1}", pageBlob.Properties.Length, pageBlob.Uri);
+
+                }
+                else if (item.GetType() == typeof(CloudBlobDirectory))
+                {
+                    CloudBlobDirectory directory = (CloudBlobDirectory)item;
+
+                    Console.WriteLine("Directory: {0}", directory.Uri);
+                }
+            }
         }
     }
 }

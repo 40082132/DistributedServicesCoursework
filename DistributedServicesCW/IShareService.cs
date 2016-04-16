@@ -14,6 +14,6 @@ namespace DistributedServicesCW
         byte[] SaveData(byte[] serialized, int sharenumbers, string blobName, string containerName);
 
         [OperationContract]
-        string RetrieveData(string containerName, string blobName);
+        byte[] RetrieveData(string containerName, string blobName);
     }
 }

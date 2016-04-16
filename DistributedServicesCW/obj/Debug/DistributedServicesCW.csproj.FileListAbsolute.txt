@@ -77,3 +77,4 @@ C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServices
 C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.Data.Edm.dll
 C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.Data.Services.Client.dll
 C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Microsoft.Data.OData.dll
+C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\DistributedServicesCW\bin\Debug\Newtonsoft.Json.dll
