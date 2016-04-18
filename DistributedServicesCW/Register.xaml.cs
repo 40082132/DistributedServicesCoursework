@@ -37,8 +37,8 @@ namespace DistributedServicesCW
         {
 
             InitializeComponent();
-            connect.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;" + "AttachDbFilename=|DataDirectory|\\LoginData.mdf;Integrated Security=True";
-            connect.Open();
+            connect.ConnectionString = "Server=tcp:distributedservices.database.windows.net,1433;Database=LoginDatabase;User ID=Liam@distributedservices;Password=Scotland1!;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            
 
 
         }
@@ -69,61 +69,63 @@ namespace DistributedServicesCW
         {
             
 
-            bool uniqueusername = true;
+            
+            bool passwordStrong = false;
             User u1 = new User();
             u1.FirstName = txtFirstName.Text;
             u1.LastName = txtLastName.Text;
             u1.Password = txtPassword.Text;
             u1.EmailAddress = txtEmail.Text;
             u1.Username = txtUsername.Text;
-            passwordIsStrong(u1.Password);
-            firstNameIsValid(u1.FirstName);
-            usernameIsValid(u1.Username);
-            emailisValid(u1.EmailAddress);
+           
 
             passwordIsSafe();
 
 
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT Username FROM [Logins]", connect);
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT Username FROM [Users]", connect);
             DataTable dt = new DataTable();
             sda.Fill(dt);
 
-           
-            if (emailisValid(u1.EmailAddress.ToString()) == true)
-            {
-                MessageBox.Show("email is invalid");
-            }
-            if(firstNameIsValid(u1.FirstName.ToString()) == true)
-            {
-                MessageBox.Show("First name is invalid");
-            }
-            if(lastNameIsValid(u1.LastName.ToString()) == true)
-            {
-                MessageBox.Show("Last name is invalid");
-            }
-            if(passwordIsStrong(u1.Password.ToString()) == true)
-            {
-                MessageBox.Show("Password is not strong enough");
-            }
+
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             
-                if (emailisValid(u1.EmailAddress.ToString()) == true && firstNameIsValid(u1.FirstName.ToString())
-                == true && lastNameIsValid(u1.LastName.ToString()) == true && passwordIsStrong(u1.Password.ToString())== true)
+            Match match = regex.Match(u1.EmailAddress);
+
+         
+            if(!match.Success)
+            {
+                MessageBox.Show("Email is invalid");
+            }
+
+            PasswordScore passwordStrength = PasswordAdvisor.CheckStrength(u1.Password);
+            switch(passwordStrength)
+            {
+                case PasswordScore.Blank:
+                case PasswordScore.VeryWeak:
+                case PasswordScore.Weak:
+                 
+                case PasswordScore.Medium:
+                case PasswordScore.Strong:
+                case PasswordScore.VeryStrong:
+                    passwordStrong = true;
+                    break;
+            }
+                if (match.Success && u1.FirstName != "" && u1.LastName != "")
                 {
-                    string cmdString = "INSERT INTO [Logins] (Username, Password, Email, First_Name, Last_Name) VALUES (@val1, @val2, @val3, @val4, @val5)";
+                    string cmdString = "INSERT INTO [Users] (Username, Password, Email, First_Name, Last_Name) VALUES (@val1, @val2, @val3, @val4, @val5)";
 
 
-                    using (SqlCommand comm = new SqlCommand())
+                    using (SqlCommand comm = new SqlCommand(cmdString, connect))
                     {
-                        comm.Connection = connect;
-                        comm.CommandText = cmdString;
-                        comm.Parameters.AddWithValue("@val1", txtUsername.Text);
-                        comm.Parameters.AddWithValue("@val2", txtPassword.Text);
-                        comm.Parameters.AddWithValue("@val3", txtEmail.Text);
-                        comm.Parameters.AddWithValue("@val4", txtFirstName.Text);
-                        comm.Parameters.AddWithValue("@val5", txtLastName.Text);
+                        
+                        comm.Parameters.AddWithValue("@val1", u1.Username);
+                        comm.Parameters.AddWithValue("@val2", u1.Password);
+                        comm.Parameters.AddWithValue("@val3", u1.EmailAddress);
+                        comm.Parameters.AddWithValue("@val4", u1.FirstName);
+                        comm.Parameters.AddWithValue("@val5", u1.LastName);
                         try
                         {
-                            
+                        connect.Open();
                             comm.ExecuteNonQuery();
                         connect.Close();
                         }
@@ -134,9 +136,9 @@ namespace DistributedServicesCW
                     }
 
 
-                    //FileStorageInterface filestore = new FileStorageInterface(u1);
-                    //filestore.Show();
-                    //this.Close();
+                    FileStorageInterface filestore = new FileStorageInterface(u1);
+                    filestore.Show();
+                    this.Close();
                 
                 }
             
@@ -145,63 +147,9 @@ namespace DistributedServicesCW
                 MessageBox.Show("Input is invalid");
             }
         }
-        public bool emailisValid(string EmailAddress)
-        {
+        
 
-            if (Regex.IsMatch(EmailAddress, @"\A[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@
-(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\z"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool firstNameIsValid(string FirstName)
-        {
-            if (Regex.IsMatch(FirstName, @"/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool lastNameIsValid(string LastName)
-        {
-            if (Regex.IsMatch(LastName, @"/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool usernameIsValid(string username)
-        {
-            if (Regex.IsMatch(username, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool passwordIsStrong(string password)
-        {
-            if (Regex.IsMatch(password, @"/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.[\W]).{8,}$/"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+       
     }
 
     

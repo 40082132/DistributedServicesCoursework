@@ -38,17 +38,17 @@ namespace DistributedServicesCW
         private void btnSignIn_Click(object sender, RoutedEventArgs e)
         {
             SqlConnection connect = new SqlConnection();
-            connect.ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;" + "AttachDbFilename=|DataDirectory|\\LoginData.mdf;Integrated Security=True";
+            connect.ConnectionString = connect.ConnectionString = "Server=tcp:distributedservices.database.windows.net,1433;Database=LoginDatabase;User ID=Liam@distributedservices;Password=Scotland1!;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             connect.Open();
             User u1 = new User();
             u1.Username = txtUsername.Text;
             u1.Password = txtPassword.Text;
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT COUNT(*) FROM [Logins] WHERE Username='" + txtUsername.Text + "' AND Password='" + txtPassword.Text + "'", connect);
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT COUNT(*) FROM [Users] WHERE Username='" + txtUsername.Text + "' AND Password='" + txtPassword.Text + "'", connect);
             DataTable dt = new DataTable(); //this is creating a virtual table  
             sda.Fill(dt);
             if (dt.Rows[0][0].ToString() == "1")
             {
-                /* I have made a new page called home page. If the user is successfully authenticated then the form will be moved to the next form */
+                
                 
                 FileStorageInterface filestore = new FileStorageInterface(u1);
                 filestore.Show();

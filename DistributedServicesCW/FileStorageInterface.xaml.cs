@@ -33,17 +33,15 @@ namespace DistributedServicesCW
     /// </summary>
     public partial class FileStorageInterface : Window , IShareService
     {
+        
+
         public FileStorageInterface(User u1) 
         {
-
+            
             InitializeComponent();
         }
 
-        private void btnManage_Click(object sender, RoutedEventArgs e)
-        {
-            ProfileManage manage = new ProfileManage();
-            manage.Show();
-        }
+        
 
         private void btnQuit_Click(object sender, RoutedEventArgs e)
         {
@@ -164,6 +162,14 @@ namespace DistributedServicesCW
 
         private void btnDownload_Click(object sender, RoutedEventArgs e)
         {
+            string filepath = null;
+            Microsoft.Win32.SaveFileDialog pathdlg = new Microsoft.Win32.SaveFileDialog();
+            Nullable<bool> result = pathdlg.ShowDialog();
+            if (result == true)
+            {
+                filepath = pathdlg.FileName;
+
+            }
             int n = 5, t = 3;
             RandomSources random = RandomSources.SHA1;
             Encryptors encrypt = Encryptors.ChaCha20;
@@ -185,7 +191,7 @@ namespace DistributedServicesCW
                 shareList.RemoveAt(rand.Next(shareList.Count));
             shares = shareList.ToArray();
             object o = ByteArrayToObject(f.join(shares));
-            File.WriteAllText(@"C:\\Users\\Liam\\file.txt",((string)o));
+            File.WriteAllText(filepath,((string)o));
             
 
 
@@ -213,7 +219,7 @@ namespace DistributedServicesCW
                 if (item.GetType() == typeof(CloudBlockBlob))
                 {
                     CloudBlockBlob blob = (CloudBlockBlob)item;
-                    lstFiles.Items.Add(blob.Uri);
+                    lstFiles.Items.Add(blob.Name);
 
 
                 }
@@ -230,6 +236,29 @@ namespace DistributedServicesCW
                     
                 }
             }
+        }
+
+        private void btnManage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            string storageConnectionString =
+       "DefaultEndpointsProtocol=https;AccountName=distributedservicecs;" +
+       "AccountKey=ZNvGKlBuIaNDiybax9vrZTyMM3Jz9BUgpVFcyyVhy5BjGp8UxX4OW/liK9o0wBnYTt6zrNqTmtZSwnPQbt612w==";
+            CloudStorageAccount storageAccount =
+                CloudStorageAccount.Parse(storageConnectionString);
+            // Create the blob client.
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            // Retrieve reference to a previously created container.
+            CloudBlobContainer container = blobClient.GetContainerReference("mycontainer");
+            // Retrieve reference to a blob named "myblob.txt".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(lstFiles.SelectedItem.ToString());
+            // Delete the blob.
+            blockBlob.Delete();
+
         }
     }
 }

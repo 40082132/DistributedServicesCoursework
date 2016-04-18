@@ -17,10 +17,10 @@
         <Button x:Name="btnUpload" Content="Upload File" HorizontalAlignment="Left" Margin="60,228,0,0" VerticalAlignment="Top" Width="75" Click="btnUpload_Click"/>
         <Button x:Name="btnLogout" Content="Logout" HorizontalAlignment="Left" Margin="274,228,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.413,0.455" IsCancel="True" Click="btnLogout_Click"/>
         <Button x:Name="btnQuit" Content="Quit" HorizontalAlignment="Left" Margin="391,228,0,0" VerticalAlignment="Top" Width="75" Click="btnQuit_Click"/>
-        <Button x:Name="btnManage" Content="Manage Profile" HorizontalAlignment="Left" Margin="461,76,0,0" VerticalAlignment="Top" Width="115" Click="btnManage_Click"/>
         <Label x:Name="lblWelcome" Content="" HorizontalAlignment="Left" Height="29" Margin="101,14,0,0" VerticalAlignment="Top" Width="278"/>
         <Button x:Name="btnBrowse" Content="Browse Local files" HorizontalAlignment="Left" Margin="461,140,0,0" VerticalAlignment="Top" Width="115" Click="btnBrowse_Click"/>
         <Button x:Name="btnList" Content="List stored files" HorizontalAlignment="Left" Margin="461,199,0,0" VerticalAlignment="Top" Width="115" Click="btnList_Click"/>
+        <Button x:Name="BtnDelete" Content="Delete Share" HorizontalAlignment="Left" Margin="461,83,0,0" VerticalAlignment="Top" Width="115" Click="BtnDelete_Click"/>
 
     </Grid>
 </Window>
