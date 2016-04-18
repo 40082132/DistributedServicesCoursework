@@ -31,62 +31,7 @@ namespace DistributedServicesCW
         [DataMember(Name = "User Number")]
         public string UserNumber;
         
-        public bool emailisValid()
-        {
-           
-            if (Regex.IsMatch(EmailAddress, @"((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool firstNameIsValid()
-        {
-            if (Regex.IsMatch(FirstName, @"/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool lastNameIsValid()
-        {
-            if(Regex.IsMatch(LastName, @"/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool usernameIsValid()
-        {
-            if(Regex.IsMatch(Username, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool passwordIsStrong()
-        {
-            if(Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+
         public string hashPassword(string password)
         {
             SHA256 sha = new SHA256CryptoServiceProvider();
