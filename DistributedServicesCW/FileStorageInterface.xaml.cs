@@ -61,33 +61,22 @@ namespace DistributedServicesCW
         {
             int n = 5, t = 3;
             RandomSources random = RandomSources.SHA1;
-            Encryptors encrypt = Encryptors.AES;
+            Encryptors encrypt = Encryptors.ChaCha20;
             Algorithms a = Algorithms.CSS;
             System.IO.StreamReader file = new System.IO.StreamReader(lstFiles.SelectedItem.ToString());
             string secret = file.ReadToEnd();
             byte[] bytes = ObjectToByteArray(secret);
             Facade f = new Facade(n, t, random, encrypt, a);
             Share[] shares = f.split(bytes);
-            int counter = n - t;
-            List<Share> list = shares.ToList();
-            Random rand = new Random();
-            for (int i = 0; i < counter; i++)
-            {
-                list.RemoveAt(rand.Next(list.Count));
-            }
-            shares = list.ToArray();
-            Object o = ByteArrayToObject(f.join(shares));
             int c = 0;
-            byte[] s = null;
-            for (c = 0; c < shares.Length; c++)
-            {
-                s = shares[c].serialize();
-            }
-            int sharenumbers = s.Length;
-            byte[] storedData = SaveData(s, sharenumbers, "myblob", "mycontainer");
             
-
-      
+            foreach (Share s in shares)
+            {
+                c++;
+                byte[] serialized = s.serialize();
+                byte[] storedData = SaveData(serialized, serialized.Length, "myblob" + c , "mycontainer");
+            }
+            
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -177,21 +166,26 @@ namespace DistributedServicesCW
         {
             int n = 5, t = 3;
             RandomSources random = RandomSources.SHA1;
-            Encryptors encrypt = Encryptors.AES;
+            Encryptors encrypt = Encryptors.ChaCha20;
             Algorithms a = Algorithms.CSS;
             Facade f = new Facade(n, t, random, encrypt, a);
-
-            Byte[] downloadedData = RetrieveData("mycontainer", "myblob");
-            Share[] shares = f.split(downloadedData);
+            Share[] shares = null;
             List<Share> shareList = new List<Share>();
-            for(int i = 0; i<shares.Length; ++i)
+            int k = 0;
+            for (int j = 0; j<n; j++)
             {
+                k++;
+                byte[] downloadedData = RetrieveData("mycontainer", "myblob" + k);
                 Share s = SerializableShare.deserialize(downloadedData);
                 shareList.Add(s);
             }
-            
+            int counter = n - t;
+            Random rand = new Random();
+            for (int i = 0; i < counter; i++)
+                shareList.RemoveAt(rand.Next(shareList.Count));
+            shares = shareList.ToArray();
             object o = ByteArrayToObject(f.join(shares));
-            System.IO.File.WriteAllLines("@C://Users//Liam//file.txt",((string[])o));
+            File.WriteAllText(@"C:\\Users\\Liam\\file.txt",((string)o));
             
 
 
@@ -227,14 +221,13 @@ namespace DistributedServicesCW
                 {
                     CloudPageBlob pageBlob = (CloudPageBlob)item;
 
-                    Console.WriteLine("Page blob of length {0}: {1}", pageBlob.Properties.Length, pageBlob.Uri);
-
+                    lstFiles.Items.Add(pageBlob.Uri);
                 }
                 else if (item.GetType() == typeof(CloudBlobDirectory))
                 {
                     CloudBlobDirectory directory = (CloudBlobDirectory)item;
-
-                    Console.WriteLine("Directory: {0}", directory.Uri);
+                    lstFiles.Items.Add(directory.Uri);
+                    
                 }
             }
         }

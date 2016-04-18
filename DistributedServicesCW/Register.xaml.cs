@@ -76,25 +76,44 @@ namespace DistributedServicesCW
             u1.EmailAddress = txtEmail.Text;
             u1.Username = txtUsername.Text;
 
-            
+
 
             passwordIsSafe();
 
-          
-                SqlDataAdapter sda = new SqlDataAdapter("SELECT Username FROM [Logins]", connect);
-                DataTable dt = new DataTable();
-                sda.Fill(dt);
 
-                foreach (DataRow d in dt.Rows)
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT Username FROM [Logins]", connect);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+
+            foreach (DataRow d in dt.Rows)
+            {
+                if (d.ItemArray[0].Equals(u1.Username)) ;
                 {
-                    if (d.ItemArray[0].Equals(u1.Username)) ;
-                    {
-                        uniqueusername = false;
-                    }
+                    uniqueusername = false;
+
                 }
-                if (uniqueusername == false)
+            }
+            if (u1.emailisValid() == false)
+            {
+                MessageBox.Show("email is invalid");
+            }
+            if(u1.firstNameIsValid() == false)
+            {
+                MessageBox.Show("First name is invalid");
+            }
+            if(u1.lastNameIsValid() == false)
+            {
+                MessageBox.Show("Last name is invalid");
+            }
+            if(u1.passwordIsStrong() == false)
+            {
+                MessageBox.Show("Password is not strong enough");
+            }
+            
+                if (uniqueusername == false && u1.emailisValid() && u1.firstNameIsValid()
+                && u1.lastNameIsValid() && u1.passwordIsStrong())
                 {
-                    string cmdString = "INSERT INTO Logins (Username, Password, Email, First_Name, Last_Name) VALUES (@val1, @val2, @val3, @val4, @val5)";
+                    string cmdString = "INSERT INTO [Logins] (Username, Password, Email, First_Name, Last_Name) VALUES (@val1, @val2, @val3, @val4, @val5)";
 
 
                     using (SqlCommand comm = new SqlCommand())
@@ -119,9 +138,9 @@ namespace DistributedServicesCW
                     }
 
 
-                    FileStorageInterface filestore = new FileStorageInterface(u1);
-                    filestore.Show();
-                    this.Close();
+                    //FileStorageInterface filestore = new FileStorageInterface(u1);
+                    //filestore.Show();
+                    //this.Close();
                 
                 }
             
