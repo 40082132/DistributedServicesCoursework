@@ -79,6 +79,7 @@ namespace DistributedServicesCW
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
+            lstFiles.Items.Clear();
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             Nullable<bool> result = dlg.ShowDialog();
             if(result == true)

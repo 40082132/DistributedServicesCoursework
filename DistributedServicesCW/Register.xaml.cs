@@ -29,8 +29,8 @@ namespace DistributedServicesCW
         SqlConnection connect = new SqlConnection();
 
         UserList users = new UserList();
-        public List<string> unsafePasswordList = new List<string>();
-
+       
+        
 
 
         public Register()
@@ -41,7 +41,7 @@ namespace DistributedServicesCW
             
 
 
-        }
+    }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
@@ -53,6 +53,9 @@ namespace DistributedServicesCW
 
         public bool passwordIsSafe()
         {
+            string[] logFile = System.IO.File.ReadAllLines(@"C:\Users\Liam\Documents\GitHub\DistributedServicesCoursework\worstpasswords.txt");
+            List<string> unsafePasswordList = new List<string>();
+            unsafePasswordList = logFile.ToList();
             foreach (var p in unsafePasswordList)
             {
                 if (txtPassword.Text == p)
@@ -91,7 +94,10 @@ namespace DistributedServicesCW
             
             Match match = regex.Match(u1.EmailAddress);
 
-         
+            if(passwordIsSafe() == false)
+            {
+                MessageBox.Show("Password is too common");
+            }
             if(!match.Success)
             {
                 MessageBox.Show("Email is invalid");
@@ -110,7 +116,7 @@ namespace DistributedServicesCW
                     passwordStrong = true;
                     break;
             }
-                if (match.Success && u1.FirstName != "" && u1.LastName != "")
+                if (match.Success && u1.FirstName != "" && u1.LastName != "" && passwordIsSafe() == true)
                 {
                     string cmdString = "INSERT INTO [Users] (Username, Password, Email, First_Name, Last_Name) VALUES (@val1, @val2, @val3, @val4, @val5)";
 
